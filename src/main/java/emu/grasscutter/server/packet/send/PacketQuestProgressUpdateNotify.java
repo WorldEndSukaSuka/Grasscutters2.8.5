@@ -1,5 +1,6 @@
 package emu.grasscutter.server.packet.send;
 
+import emu.grasscutter.game.quest.GameMainQuest;
 import emu.grasscutter.game.quest.GameQuest;
 import emu.grasscutter.net.packet.BasePacket;
 import emu.grasscutter.net.packet.PacketOpcodes;
@@ -7,23 +8,23 @@ import emu.grasscutter.net.proto.QuestProgressUpdateNotifyOuterClass.QuestProgre
 
 public class PacketQuestProgressUpdateNotify extends BasePacket {
 
-    public PacketQuestProgressUpdateNotify(GameQuest quest) {
-        super(PacketOpcodes.QuestProgressUpdateNotify);
+	public PacketQuestProgressUpdateNotify(GameQuest quest) {
+		super(PacketOpcodes.QuestProgressUpdateNotify);
 
-        QuestProgressUpdateNotify.Builder proto = QuestProgressUpdateNotify.newBuilder().setQuestId(quest.getQuestId());
+		QuestProgressUpdateNotify.Builder proto = QuestProgressUpdateNotify.newBuilder().setQuestId(quest.getSubQuestId());
 
-        if (quest.getFinishProgressList() != null) {
-            for (int i : quest.getFinishProgressList()) {
-                proto.addFinishProgressList(i);
-            }
-        }
+		if (quest.getFinishProgressList() != null) {
+			for (int i : quest.getFinishProgressList()) {
+				proto.addFinishProgressList(i);
+			}
+		}
 
-        if (quest.getFailProgressList() != null) {
-            for (int i : quest.getFailProgressList()) {
-                proto.addFailProgressList(i);
-            }
-        }
+		if (quest.getFailProgressList() != null) {
+			for (int i : quest.getFailProgressList()) {
+				proto.addFailProgressList(i);
+			}
+		}
 
-        this.setData(proto);
-    }
+		this.setData(proto);
+	}
 }
